@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
     "outDir": "./dist"
   },
   "include": [
-    "./src/included",
-    "./src/not-specified"
-  ],
-  "exclude": [
-    "./src/included/exclude-me.ts",
+    "./src",
   ]
 }

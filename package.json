@@ -1,9 +1,15 @@
 {
-  "name": "experiments",
+  "name": "npm-run-all",
+  "description": "Run multiple npm scripts in parallel or sequentially",
   "scripts": {
     "clean": "rm -rf dist",
-    "ts:compile": "tsc",
-    "build": "npm run clean && npm run ts:compile"
+    "ts:umd": "tsc --module umd --outDir dist/umd",
+    "ts:amd": "tsc --module amd --outDir dist/amd",
+    "ts:commonjs": "tsc --module commonjs --outDir dist/commonjs",
+    "ts:es6": "tsc --module es6 --outDir dist/es6",
+    "run-all": "node npm-run-all.mjs",
+    "build:parallel": "npm run clean && npm run run-all ts:* parallel",
+    "build:sequential": "npm run clean && npm run run-all ts:* sequential"
   },
   "devDependencies": {
     "typescript": "^4.5.4"
