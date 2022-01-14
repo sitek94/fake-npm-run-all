@@ -1,3 +1,9 @@
 {
-  "name": "experiments"
+  "name": "experiments",
+  "scripts": {
+    "ts:compile": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
 }
