@@ -8,8 +8,8 @@
     "ts:commonjs": "tsc --module commonjs --outDir dist/commonjs",
     "ts:es6": "tsc --module es6 --outDir dist/es6",
     "run-all": "node npm-run-all.mjs",
-    "build:parallel": "npm run clean && npm run run-all ts:* parallel",
-    "build:sequential": "npm run clean && npm run run-all ts:* sequential"
+    "build:parallel": "npm run run-all clean ts:* -- --parallel",
+    "build:sequential": "npm run run-all clean ts:* -- --sequential"
   },
   "devDependencies": {
     "typescript": "^4.5.4"

@@ -2,32 +2,38 @@ import fs from "fs";
 import childProcess from "child_process";
 
 // Get arguments from command line
-const args = process.argv.slice(2);
+let args = process.argv.slice(2);
 
-// Expect two arguments, e.g. "dev:* parallel", which will
-// run all tasks with "dev" prefix in parallel
-const [command, mode] = args;
-const [prefix, suffix] = command.split(":");
+const isParallel = args.includes("--parallel");
+// We're running in sequential mode by default, if there is no --parallel option
+const isSequential = !isParallel;
 
-if (!mode) {
-  console.error("Please specify a mode: parallel or sequential");
-  process.exit(1);
+// Filter out options
+args = args.filter((arg) => !arg.startsWith("--"));
+
+let tasks = [];
+
+for (const arg of args) {
+  const [prefix, suffix] = arg.split(":");
+
+  // Check if we want to run all the tasks
+  if (suffix === "*") {
+    // Get all tasks from package.json that match the prefix
+    const packageJsonString = fs.readFileSync("./package.json", "utf8");
+    const packageJson = JSON.parse(packageJsonString);
+    tasks = Object.keys(packageJson.scripts).filter((task) =>
+      task.startsWith(prefix)
+    );
+
+    // A task without a star "*" can be simply pushed to the list of tasks
+  } else {
+    tasks.push(arg);
+  }
 }
 
-// Check if command is used properly
-if (suffix !== "*") {
-  console.error(`Usage: "npm-run-all prefix:*"`);
-  process.exit(1);
-}
+if (isParallel) {
+  console.log("🧙‍ Running tasks in parallel\n");
 
-// Get all tasks from package.json that match the prefix
-const packageJsonString = fs.readFileSync("./package.json", "utf8");
-const packageJson = JSON.parse(packageJsonString);
-const tasks = Object.keys(packageJson.scripts).filter((task) =>
-  task.startsWith(prefix)
-);
-
-if (mode === "parallel") {
   for (const task of tasks) {
     console.log(`🏗️ Running: ${task}`);
     const command = `npm run ${task}`;
@@ -37,7 +43,9 @@ if (mode === "parallel") {
   }
 }
 
-if (mode === "sequential") {
+if (isSequential) {
+  console.log("🧱‍ Running tasks sequentially \n");
+
   for (const task of tasks) {
     console.log(`🏗️ Running: ${task}`);
     const command = `npm run ${task}`;
