@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
     "outDir": "./dist"
-  }
+  },
+  "include": [
+    "./src/included"
+  ],
+  "exclude": [
+    "./src/included/exclude-me.ts"
+  ]
 }

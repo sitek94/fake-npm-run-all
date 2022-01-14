@@ -1,7 +1,9 @@
 {
   "name": "experiments",
   "scripts": {
-    "ts:compile": "tsc"
+    "clean": "rm -rf dist",
+    "ts:compile": "tsc",
+    "build": "npm run clean && npm run ts:compile"
   },
   "devDependencies": {
     "typescript": "^4.5.4"
