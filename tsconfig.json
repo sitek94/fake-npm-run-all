@@ -3,9 +3,10 @@
     "outDir": "./dist"
   },
   "include": [
-    "./src/included"
+    "./src/included",
+    "./src/not-specified"
   ],
   "exclude": [
-    "./src/included/exclude-me.ts"
+    "./src/included/exclude-me.ts",
   ]
 }
