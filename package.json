@@ -1,5 +1,5 @@
 {
-  "name": "npm-run-all",
+  "name": "fake-npm-run-all",
   "description": "Run multiple npm scripts in parallel or sequentially",
   "scripts": {
     "clean": "rm -rf dist",
